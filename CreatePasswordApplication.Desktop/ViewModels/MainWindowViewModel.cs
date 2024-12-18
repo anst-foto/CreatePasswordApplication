@@ -6,6 +6,7 @@ using CreatePasswordApplication.PasswordCheckLib;
 using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ReactiveUI.Validation.Extensions;
 
 namespace CreatePasswordApplication.Desktop.ViewModels;
 
@@ -62,23 +63,63 @@ public class MainWindowViewModel : ViewModelBase
             Digits = "1234567890",
             Symbols = "!@#$%^&*_-+="
         };
-        
-        var observablePassword = this
-            .WhenValueChanged(vm => vm.InputPasswordText)
-            .WhereNotNull();
-        observablePassword.Subscribe(p =>
-        {
-            passwordCheck.Password = p;
-            
-            IsErrorMinLenght = !passwordCheck.CheckMinLength;
-            IsErrorMasterLetters = !passwordCheck.CheckMasterLetters;
-            IsErrorSecondLetters = !(passwordCheck.CheckSecondLetters ?? false);
-            IsErrorDigits = !(passwordCheck.CheckDigits ?? false);
-            IsErrorSymbols = !(passwordCheck.CheckSymbols ?? false);
-        });
 
-        observablePasswordAndRepeatPasswordWithEquals
-            .Subscribe(b => IsErrorEqualPasswords = !b);
+        this.ValidationRule(
+            vm => vm.InputPasswordText,
+            password =>
+            {
+                if (string.IsNullOrWhiteSpace(password)) return false;
+                
+                passwordCheck.Password = password;
+                return passwordCheck.CheckMinLength;
+            },
+            "Минимальная длина пароля 8 символов");
+        this.ValidationRule(
+            vm => vm.InputPasswordText,
+            password =>
+            {
+                if (string.IsNullOrWhiteSpace(password)) return false;
+                
+                passwordCheck.Password = password;
+                return passwordCheck.CheckMasterLetters;
+            },
+            "Пароль должен содержать хотя бы одну большую букву");
+        this.ValidationRule(
+            vm => vm.InputPasswordText,
+            password =>
+            {
+                if (string.IsNullOrWhiteSpace(password)) return false;
+                
+                passwordCheck.Password = password;
+                return passwordCheck.CheckSecondLetters ?? false;
+            },
+            "Пароль должен содержать хотя бы одну маленькую букву");
+        this.ValidationRule(
+            vm => vm.InputPasswordText,
+            password =>
+            {
+                if (string.IsNullOrWhiteSpace(password)) return false;
+                
+                passwordCheck.Password = password;
+                return passwordCheck.CheckDigits ?? false;
+            },
+            "Пароль должен содержать хотя бы одну цифру");
+        this.ValidationRule(
+            vm => vm.InputPasswordText,
+            password =>
+            {
+                if (string.IsNullOrWhiteSpace(password)) return false;
+                
+                passwordCheck.Password = password;
+                return passwordCheck.CheckSymbols ?? false;
+            },
+            "Пароль должен содержать хотя бы один специальный символ");
+
+        
+        this.ValidationRule(
+            vm => vm.InputRepeatPasswordText,
+            observablePasswordAndRepeatPasswordWithEquals,
+            "Пароли не совпадают");
     }
 
     private void ClearInputs()

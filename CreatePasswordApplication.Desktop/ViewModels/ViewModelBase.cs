@@ -1,7 +1,7 @@
-﻿using ReactiveUI;
+﻿using ReactiveUI.Validation.Helpers;
 
 namespace CreatePasswordApplication.Desktop.ViewModels;
 
-public class ViewModelBase : ReactiveObject
+public class ViewModelBase : ReactiveValidationObject
 {
 }

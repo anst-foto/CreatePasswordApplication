@@ -10,61 +10,34 @@
 
         Width="" Height="">
 
-    <Window.Styles>
-        <Style Selector="TextBlock.error">
-            <Setter Property="Foreground" Value="DarkRed"/>
-        </Style>
-    </Window.Styles>
-    
     <Window.DataContext>
         <vm:MainWindowViewModel />
     </Window.DataContext>
 
     <StackPanel Orientation="Vertical">
-        <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Пароль"
-                       Target="{Binding ElementName=InputPassword}"
-                       Width="75" />
-                <TextBox x:Name="InputPassword"
-                         Text="{Binding InputPasswordText}"
-                         Watermark="Введите пароль"
-                         PasswordChar="-"
-                         RevealPassword="True"
-                         Width="250" />
-            </StackPanel>
-            <TextBlock Text="Пароль содержит менее 8 символов"
-                       IsVisible="{Binding IsErrorMinLenght}"
-                       Classes="error"/>
-            <TextBlock Text="Пароль не содержит хотя бы одну большую букву"
-                       IsVisible="{Binding IsErrorMasterLetters}"
-                       Classes="error"/>
-            <TextBlock Text="Пароль не содержит хотя бы одну маленькую букву"
-                       IsVisible="{Binding IsErrorSecondLetters}"
-                       Classes="error"/>
-            <TextBlock Text="Пароль не содержит хотя бы одну цифру"
-                       IsVisible="{Binding IsErrorDigits}"
-                       Classes="error"/>
-            <TextBlock Text="Пароль не содержит хотя бы один спец. символ"
-                       IsVisible="{Binding IsErrorSymbols}"
-                       Classes="error"/>
+
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Пароль"
+                   Target="{Binding ElementName=InputPassword}"
+                   Width="75" />
+            <TextBox x:Name="InputPassword"
+                     Text="{Binding InputPasswordText}"
+                     Watermark="Введите пароль"
+                     PasswordChar="-"
+                     RevealPassword="True"
+                     Width="250" />
         </StackPanel>
 
-        <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Повтор пароля"
-                       Target="{Binding ElementName=InputRepeatPassword}"
-                       Width="75" />
-                <TextBox x:Name="InputRepeatPassword"
-                         Text="{Binding InputRepeatPasswordText}"
-                         Watermark="Повторите пароль"
-                         PasswordChar="="
-                         RevealPassword="True"
-                         Width="250" />
-            </StackPanel>
-            <TextBlock Text="Пароли не совпадают"
-                       IsVisible="{Binding IsErrorEqualPasswords}"
-                       Classes="error"/>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Повтор пароля"
+                   Target="{Binding ElementName=InputRepeatPassword}"
+                   Width="75" />
+            <TextBox x:Name="InputRepeatPassword"
+                     Text="{Binding InputRepeatPasswordText}"
+                     Watermark="Повторите пароль"
+                     PasswordChar="="
+                     RevealPassword="True"
+                     Width="250" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal">
